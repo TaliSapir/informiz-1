@@ -1,0 +1,41 @@
+.tipso_bubble {
+	box-shadow: 5px 5px 8px #ccc;
+	padding:3px 8px 8px 8px !important;
+}
+
+.iz_bpop_container {
+	border-radius:10px 10px 10px 10px;
+	box-shadow:0 0 25px 5px #999;
+	padding:25px;
+	display: none;
+}
+
+.iz_bpop_content {
+	background:url('preload64.GIF') center center no-repeat;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.iz_bpop_content > img {
+	min-width: 300px;
+}
+
+.iz_query {
+	padding:10px 1px 1px 1px;
+	text-align: left;
+	font-size: 0.8em;
+}
+
+.iz_bpop_close {
+	background-color: #ee7c2a;
+	border-radius:7px 7px 7px 7px;
+	box-shadow:none;
+	font:bold 131% sans-serif;
+	padding:0 6px 2px;
+	position:absolute;
+	right:-7px;top:-7px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+}
