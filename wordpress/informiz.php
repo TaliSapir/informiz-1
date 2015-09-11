@@ -23,16 +23,9 @@ For the full GNU General Public License, see http://www.gnu.org/licenses/gpl.htm
 defined( 'ABSPATH' ) or die( 'Plugin file cannot be accessed directly.' );
 
 function informiz_scripts() {
-	wp_register_script('bpopup', plugins_url('jquery.bpopup.min.js', __FILE__), array('jquery'),'0.11.0.min', true);
-	wp_register_script('dotimeout', plugins_url('doTimeout.js', __FILE__), array('jquery'),'1.0', true);
-	wp_register_script('tipso', plugins_url('tipso.js', __FILE__), array('jquery'),'0.11.0.min', true);
-	wp_register_script('informiz', plugins_url('informiz.js', __FILE__), array('jquery', 'bpopup', 'tipso'),'0.1', true);
-	wp_register_style('iz-common', plugins_url('iz_common.css', __FILE__));
-	wp_register_style('informiz-style', plugins_url('informiz.css', __FILE__));
-	wp_register_style('tipso-style', plugins_url('tipso.css', __FILE__));
-	wp_enqueue_style('tipso-style');
+	wp_register_script('informiz-plugin', plugins_url('iz_plugin.min.js', __FILE__), array('jquery'),'0.1', true);
+	wp_register_style('informiz-style', plugins_url('iz_plugin.css', __FILE__));
 	wp_enqueue_style('informiz-style');
-	wp_enqueue_style('iz-common');
 }
 add_action( 'wp_enqueue_scripts', 'informiz_scripts' );
 
@@ -42,10 +35,7 @@ $iz_tooltip_added = FALSE;
 function informiz_shortcode( $atts, $content )
 {
 	if (! $GLOBALS['informiz_init']) {
-		wp_enqueue_script('bpopup');
-		wp_enqueue_script('dotimeout');
-		wp_enqueue_script('tipso');
-		wp_enqueue_script('informiz');
+		wp_enqueue_script('informiz-plugin');
 		$GLOBALS['informiz_init'] = TRUE;
 	}
 	
