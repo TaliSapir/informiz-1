@@ -4,14 +4,12 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {   
-			dist: {
-				src: [
-					'js/*.js', 
-				],
+			js: {
+				src: ['js/*.js'],
 				dest: 'js/build/iz_plugin.js',
-				src: [
-					'style/*.css', 
-				],
+			},
+			css: {
+				src: ['style/*.css'],
 				dest: 'dist/iz_plugin.css',
 			}
 		},
@@ -41,17 +39,11 @@ module.exports = function(grunt) {
 		watch: {
 			scripts: {
 				files: ['js/*.js'],
-				tasks: ['concat', 'uglify'],
-				options: {
-					spawn: false,
-				}
+				tasks: ['concat', 'uglify']
 			},
 			styles: {
 				files: ['style/*.css'],
-				tasks: ['concat', 'postcss'],
-				options: {
-					spawn: false,
-				}
+				tasks: ['concat', 'postcss']
 			} 
 		}
 	});
@@ -59,6 +51,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-postcss');
+	grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('default', ['concat', 'uglify', 'postcss:dist']);
 

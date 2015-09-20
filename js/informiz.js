@@ -57,7 +57,7 @@ getEmbedUrl: function(target) {
 		case 'prezi':
 			var m = target.src.match(/^([a-zA-Z0-9-_]{3,30})/);
 			if ( (m !== null) && (m[1] !== undefined) ) {
-					iz_url = 'https://prezi.com/embed/' + m[1];
+					iz_url = 'https://prezi.com/embed/' + m[1] + '/?autoplay=1';
 			}
 			break;
 		case 'gapminder':
