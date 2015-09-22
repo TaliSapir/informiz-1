@@ -2,8 +2,8 @@
 Contributors: homosepian
 Tags: informiz,informi,information made accessible,tldr
 Requires at least: 3.0.1
-Tested up to: 4.3
-Stable tag: trunk 
+Tested up to: 4.3.1
+Stable tag: 0.2.0
 License: GPLv2 or later
 
 Embed fun, graphic TL;DR explanations about anything and everything in your posts.
@@ -51,3 +51,8 @@ Because it's not implemented yet. The informiz.org site is still work-in-progres
 
 = 0.1.0 =
 * Alpha release
+
+= 0.2.0 =
+* Minified resources for better performance
+* Avoid conflicts with tipso plugin
+

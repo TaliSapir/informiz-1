@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Informiz 
 Plugin URI: http://informiz.org/use-informiz/ 
-Version: 0.1.0 
+Version: 0.2.0
 Author: Nira Amit 
 Description: Embed TL;DR explanations about things in your website
 License: GPLv2 or later
