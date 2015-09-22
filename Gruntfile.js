@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 		clean: {
 			build: ["js/build/**", "style/maps/**"],
 			svn: ["build/<%= pkg.name %>/trunk/**"],
-			release: ["build/**", "wordpress/**", "!wordpress/*.php", "!wordpress/*.txt"]
+			release: ["build/**", "wordpress/*.*", "!wordpress/*.php", "!wordpress/*.txt"]
 		}
 	});
 
@@ -173,6 +173,6 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'prep_svn', ['prep', 'svn_checkout', 'clean:svn' ] );
 	grunt.registerTask( 'do_svn', [ 'copy:svn_trunk', 'copy:svn_tag' ] );
 	grunt.registerTask( 'do_git', [  'gitcommit', 'gittag' ] );
-	grunt.registerTask( 'release', [ 'prep_svn', 'do_svn', 'do_git', 'clean:post_build' ] );
+	grunt.registerTask( 'release', [ 'prep_svn', 'do_svn', 'do_git', 'clean:release' ] );
 
 };
