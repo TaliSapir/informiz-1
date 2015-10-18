@@ -39,3 +39,23 @@
 	display: inline-block;
 	text-align: center;
 }
+
+svg {
+    background: #fff !important;
+}
+
+.node.Informi text {
+	fill: #EF924F;
+	stroke: #EF924F;
+	font-size: 20px;
+	text-shadow: 1px 1px 5px #FFF;
+}
+
+.edge.Relation.active text {
+	display: block;
+	fill: #EF924F;
+	stroke: #EF924F;
+	font-size: 20px;
+	text-shadow: 1px 1px 5px #FFF;
+}
+
