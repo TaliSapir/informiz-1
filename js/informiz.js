@@ -156,19 +156,10 @@ var INFORMIZ_UTILS = {
 var LANDSCAPE_UTILS = {
 	getLandscapeGraph: function(informiId, cb) {
 		$.ajax(
-			{url : "http://localhost:7474/db/data/transaction/commit",
-			type: "POST",
+			{url : "http://localhost:8080/graph?informi="+informiId,
+			type: "GET",
 			dataType: "json",
 			contentType : 'application/json',
-			data: JSON.stringify({
-				statements: [{
-					statement: 'MATCH (i:Informi)-[r]->(other:Informi) WHERE i.id={informiId} OR other.id={informiId} RETURN i, r, other',
-					parameters: {
-					  "informiId" : parseInt(informiId)
-					},
-					resultDataContents: ["row", "graph"]
-				}]
-			}),
 			error: function(err) {
 				cb(err);
 			},
@@ -176,34 +167,7 @@ var LANDSCAPE_UTILS = {
 				if (res.errors.length > 0) {
 					cb(res.errors);
 				} else {
-					var cols = res.results[0].columns;// [ "bike", "p1", "p2" ]
-					var rows = res.results[0].data.map(function(row) { 
-						var r = {};
-						cols.forEach(function(col, index) {
-							r[col] = row.row[index]; 
-						});
-						return r;
-					});
-					var nodes = [];
-					var rels = [];
-					var labels = [];
-					res.results[0].data.forEach(function(row) {
-						row.graph.nodes.forEach(function(n) {
-						   var found = nodes.filter(function (m) { return m.informiId == n.properties.id; }).length > 0;
-						   if (!found) {
-							  var node = n.properties||{}; 
-							  node.informiId = n.properties.id;
-							  node.id = n.id;
-										  node.type=n.labels[0];
-							  if (node.informiId == informiId) node.root = true;
-							  nodes.push(node);
-							  if (labels.indexOf(node.type) == -1) labels.push(node.type);
-						   }
-						});
-						rels = rels.concat(row.graph.relationships.map(function(r) { 
-							return { source:r.startNode, target:r.endNode, caption:r.properties.description, type:"Relation"} }));
-					});
-					cb(null,{table:rows,graph:{nodes:nodes, edges:rels}, labels:labels});
+					cb(null,res);
 				}
 			}
 		});
@@ -211,6 +175,8 @@ var LANDSCAPE_UTILS = {
 	
 	initAlchemyConfig: function() {
 		var config = {
+			graphHeight: function(){ return 480; },
+			graphWidth: function(){ return 800; },
 			dataSource: {nodes:[],edges:[]},
 			alpha: 0.5,
 			edgeCaption: "caption",
@@ -247,7 +213,10 @@ var LANDSCAPE_UTILS = {
 				delay: 300
 			});
 			var the_url = INFORMIZ_UTILS.getEmbedUrl( {media:n.media_type, src:n.media_source} );
-			$element.dblclick(function(e) { $element.iztipso('hide'); INFORMIZ_UTILS.bPop($('#informipop'), the_url); });
+			$element.dblclick(function(e) { 
+				$element.iztipso('hide'); 
+				INFORMIZ_UTILS.bPop($('#informipop'), the_url); 
+			});
 			$element.mousedown(function(e) { isDragging = true; $element.iztipso('hide');} );
 			$element.mousemove(function(e) { if (isDragging) $element.iztipso('hide'); });
 			$element.mouseup(function() { isDragging = false; });
@@ -256,24 +225,25 @@ var LANDSCAPE_UTILS = {
 
 
 	createLandscape: function(informiId) {
-		if (! alchemy) {
-			config = LANDSCAPE_UTILS.initAlchemyConfig();
-			alchemy = new Alchemy(config);
-			alchemy.begin(config)
-		}
 		try {
 			LANDSCAPE_UTILS.getLandscapeGraph(informiId, function(err,res) {
-				res = res || {}
-				var graph = res.graph;
-				var labels = res.labels;
-				alchemy.conf.nodeTypes = {type: labels};
 				if (err) {
-					alchemy.conf.warningMessage=JSON.stringify(err);
-					alchemy.startGraph(null)
+					LANDSCAPE_UTILS.renderErrorMsg(err);
+				} else if (! res || res.graph.nodes.length == 0) {
+					LANDSCAPE_UTILS.renderErrorMsg('No landscape available');
 				} else {
+					if (! alchemy) {
+						config = LANDSCAPE_UTILS.initAlchemyConfig();
+						alchemy = new Alchemy(config);
+						alchemy.begin(config)
+					}
+					var graph = res.graph;
+					var labels = res.labels;
+					alchemy.conf.nodeTypes = {type: labels};
 					alchemy.conf.afterLoad = function(){
 						LANDSCAPE_UTILS.bindEvents(graph.nodes);
 					};
+					$('#alchemy').show();
 					alchemy.startGraph(graph);
 				}
 			});
@@ -283,8 +253,15 @@ var LANDSCAPE_UTILS = {
 		return false;
 	},
 
+	renderErrorMsg: function(msg) {
+		$('#lands_msg').text(msg);
+		$('#lands_msg_container').show();
+	},
+
 	clearLandscape: function() {
 		alchemy = null; // TODO: check if can re-use object
+		$('#alchemy').hide();
+		$('#lands_msg_container').hide();
 	}
 }
 

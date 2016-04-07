@@ -77,7 +77,14 @@ function informiz_add_tooltip($content)
 	</div></div>
 	<div id="informipop" class="iz_bpop_container" >
 		<span class="iz_bpop_close"><span>X</span></span>
-		<div class="iz_bpop_content"></div>
+		<div class="iz_bpop_content" style="max-width: 100vw; max-height: 100vh;"></div>
+	</div>
+	<div id="landscapepop" class="iz_bpop_container" style="min-width: 800px; min-height: 480px;">
+		<span class="iz_bpop_close"><span>X</span></span>
+		<div id="alchemy" class="alchemy" style="display:none;" ></div>
+		<div id="lands_msg_container" class="iz_section" style="display:none; min-width: 800px; min-height: 480px;">
+			<p id="lands_msg" class="iz_error"/>
+		</div>
 	</div>
 EOT;
 	$GLOBALS['iz_tooltip_added'] = TRUE;

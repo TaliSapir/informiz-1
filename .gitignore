@@ -4,5 +4,5 @@ node_modules/
 wordpress/*.png
 wordpress/*.gif
 wordpress/*.css
-Wordpress/*.js
+wordpress/*.js
 **/*.*~

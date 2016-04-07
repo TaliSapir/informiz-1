@@ -2,7 +2,7 @@
 Contributors: homosepian
 Tags: informiz,informi,information made accessible,tldr
 Requires at least: 3.0.1
-Tested up to: 4.3.1
+Tested up to: 4.5
 Stable tag: 0.2.0
 License: GPLv2 or later
 

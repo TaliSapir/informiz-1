@@ -3,10 +3,10 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        // concatenate all scripts and styles into one js and one css file
+        // concatenate all scripts and styles into one js and one css file 
 		concat: {   
 			js: {
-				src: ['js/*.js'],
+				src: ['js/vendor.js', 'js/alchemy.js', 'js/doTimeout.js', 'js/tipso.js', 'js/bpopup.js', 'js/informiz.js'],
 				dest: 'js/build/iz_plugin.js',
 			},
 			css: {
